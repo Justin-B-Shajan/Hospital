@@ -1,0 +1,57 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <!-- Heading -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary text-white">
+      <i class="fas fa-notes-medical me-2 text-white"></i> Add Health Resource
+    </h2>
+    <p  style="color: rgba(255,255,255,0.85);">Fill in the details to create a new resource for patients and doctors</p>
+  </div>
+
+  <!-- Card -->
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body p-5">
+      <form method="post">
+        {% csrf_token %}
+        
+        <!-- Form fields -->
+        <div class="mb-3">
+          {{ form.as_p }}
+        </div>
+
+        <!-- Action buttons -->
+        <div class="d-flex justify-content-end mt-4">
+          <a href="{% url 'admin_health_resources' %}" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-times me-1"></i> Cancel
+          </a>
+          <button type="submit" class="btn btn-success px-4">
+            <i class="fas fa-save me-1"></i> Save Resource
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Extra Styling -->
+<style>
+  body {
+    background: #0e6ac7;
+  }
+  .card {
+    transition: transform 0.2s ease-in-out;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  form p {
+    margin-bottom: 1.2rem;
+    color: white;
+  }
+  form label {
+    font-weight: 600;
+    color: #333;
+  }
+</style>
+{% endblock %}

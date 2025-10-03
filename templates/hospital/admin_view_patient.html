@@ -1,0 +1,153 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .page-title {
+        text-align: center;
+        margin: 30px 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .card-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(246, 245, 245, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    thead th {
+        background: linear-gradient(135deg, #000000, #000000);
+        color: #fff;
+        padding: 14px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    thead th:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    thead th:last-child {
+        border-top-right-radius: 10px;
+    }
+
+    tbody tr {
+        background: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #eef6ff;
+        transform: scale(1.01);
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 2px solid #fff;
+        vertical-align: middle;
+    }
+
+    .patient-name {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .symptoms {
+        color: #555;
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    .btn-update {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .btn-update:hover {
+        background: #0056b3;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .btn-delete:hover {
+        background: #a71d2a;
+    }
+
+    .profile-pic {
+        border-radius: 50%;
+        border: 2px solid #007bff;
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">
+        <i class="glyphicon glyphicon-user"></i> Patient List
+    </h2>
+
+    <div class="card-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Profile Pic</th>
+                    <th>Patient Name</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Assigned Doctor</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>
+                        {% if patient.profile_pic %}
+                            <img src="{% static patient.profile_pic.url %}" alt="Profile Pic" class="profile-pic" height="40" width="40">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" alt="Profile Pic" class="profile-pic" height="40" width="40">
+                        {% endif %}
+                    </td>
+                    <td class="patient-name">{{ patient.get_name }}</td>
+                    <td>{{ patient.mobile }}</td>
+                    <td>{{ patient.address }}</td>
+                    <td>{{ patient.assigned_doctor_name|default:"Not Assigned" }}</td>
+                    <td>
+                        <a href="{% url 'update-patient' patient.id %}" class="btn btn-action btn-update">Update</a>
+                        <a href="{% url 'delete-patient-from-hospital' patient.id %}" class="btn btn-action btn-delete">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No approved patients found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Waiting for Approval</title>
+
+  <style>
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .content-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .approval-box {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      max-width: 600px;
+    }
+    .approval-box h1 {
+      font-size: 28px;
+      color: #0d1b2a;
+    }
+    .approval-box p {
+      color: #555;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  {% include "hospital/loggedin_navbar.html" %}
+  <div class="content-container">
+    <div class="approval-box">
+      <h1>Hello, Dr. {{request.user.first_name}} {{request.user.last_name}}</h1>
+      <p class="lead">Your account is pending approval from an administrator.</p>
+      <hr class="my-4">
+      <p>You will be able to access your dashboard once your account is approved. Thank you for your patience.</p>
+    </div>
+  </div>
+  {% include "hospital/footer.html" %}
+</body>
+</html>

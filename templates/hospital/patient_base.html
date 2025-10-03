@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #003973 0%, #0072ff 50%, #00c6ff 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar */
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #ffdd57 !important;
+        }
+
+        /* Sidebar menu */
+        .menu {
+            width: 220px !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+            height: 100vh !important;
+            position: fixed !important;
+            top: 56px !important;
+            left: 0 !important;
+            overflow-y: auto !important;
+            padding-top: 20px !important;
+        }
+
+        .menu a {
+            display: flex !important;
+            align-items: center !important;
+            padding: 12px 20px !important;
+            color: white !important;
+            text-decoration: none !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            white-space: nowrap !important;
+        }
+
+        .menu a i {
+            margin-right: 12px !important;
+            font-size: 1.1rem !important;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main content */
+        main {
+            margin-left: 220px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Avatar section */
+        .avatar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .avatar h6 {
+            color: white;
+            margin: 5px 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        footer a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #ffdd57;
+            transform: scale(1.1);
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .menu {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <a class="navbar-brand" href="/patient-dashboard">Hospital Patient</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="menu">
+        <div class="avatar">
+            <img src="{% static patient.profile_pic.url %}" alt="Profile Pic">
+            <h6>{{ request.user.first_name }}</h6>
+        </div>
+        <a href="/patient-dashboard" class="{% if request.path == '/patient-dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="{% url 'patient-view-appointment' %}" class="{% if request.path == '/patient-appointment' %}active{% endif %}"><i class="fas fa-calendar-check"></i> Appointments</a>
+        <a href="/patient-view-doctor" class="{% if request.path == '/patient-view-doctor' %}active{% endif %}"><i class="fas fa-user-md"></i> Doctors</a>
+        <a href="{% url 'health_resources' %}" class="{% if request.path == '/health-resources/' %}active{% endif %}"><i class="fas fa-book-medical"></i> Health Resources</a>
+        <a href="{% url 'patient-prescription' %}" class="{% if request.path == '/patient/prescriptions/' %}active{% endif %}"><i class="fas fa-prescription"></i> Prescriptions</a>
+        <a href="/patient-discharge" class="{% if request.path == '/patient-discharge' %}active{% endif %}"><i class="fas fa-procedures"></i> Discharge</a>
+
+        <!-- Logout Link -->
+        <form id="logout-form" action="{% url 'logout' %}" method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger w-100">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            <a href="" target="_blank" class="fab fa-facebook"></a>
+            <a href="" target="_blank" class="fab fa-whatsapp"></a>
+            <a href="" target="_blank" class="fab fa-instagram"></a>
+            <a href="" target="_blank" class="fab fa-twitter"></a>
+        </div>
+        <p>Made in Kerala © 2025 Justin B Shajan</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

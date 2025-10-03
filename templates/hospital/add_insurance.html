@@ -1,0 +1,100 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    body {
+        background: #0e64e5;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        background: white;
+        overflow: hidden;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #0e64e5, #0072ff);
+        color: white;
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    form label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+    }
+
+    form input,
+    form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    h2 {
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    form input:focus,
+    form select:focus {
+        border-color: #0e64e5;
+        outline: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #0e64e5, #0072ff);
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #0059c1;
+    }
+
+   
+</style>
+
+<div class="form-container mt-4">
+    <!-- <h2 class="text-center mb-4">Add Insurance</h2> -->
+
+    <div class="card">
+        <div class="card-header">
+            Add Insurance Details
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

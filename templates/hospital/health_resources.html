@@ -1,0 +1,105 @@
+{% extends 'hospital/patient_base.html' %}
+{% block content %}
+<br>
+<style>
+  .page-title {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .section-title {
+    margin-top: 40px;
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-custom {
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    background: #fff;
+    border-left: 6px solid transparent;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .card-custom:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+
+  .card-custom h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .card-custom p {
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .date-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 15px;
+    background: #f1f1f1;
+    color: #666;
+  }
+
+  /* Category styles */
+  .tips-card { border-left-color: #28a745; }
+  .articles-card { border-left-color: #17a2b8; }
+  .wellness-card { border-left-color: #ffc107; }
+
+  .text-success { color: #28a745 !important; }
+  .text-info { color: #17a2b8 !important; }
+  .text-warning { color: #e0a800 !important; }
+</style>
+
+<div class="container">
+  <h2 class="page-title">🌍 Health Education Resources</h2>
+
+  <!-- Health Tips -->
+  <h3 class="section-title text-success">🥗 Health Tips</h3>
+  {% for r in tips %}
+    <div class="card-custom tips-card">
+      <h5>{{ r.title }}</h5>
+      <p>{{ r.content }}</p>
+      <span class="date-badge">{{ r.created_at|date:"M d, Y" }}</span>
+    </div>
+  {% empty %}
+    <p class="text-muted">No health tips available.</p>
+  {% endfor %}
+
+  <!-- Articles -->
+  <h3 class="section-title text-info">📄 Articles</h3>
+  {% for r in articles %}
+    <div class="card-custom articles-card">
+      <h5>{{ r.title }}</h5>
+      <p>{{ r.content }}</p>
+      <span class="date-badge">{{ r.created_at|date:"M d, Y" }}</span>
+    </div>
+  {% empty %}
+    <p class="text-muted">No articles available.</p>
+  {% endfor %}
+
+  <!-- Wellness Resources -->
+  <h3 class="section-title text-warning">🌱 Wellness Resources</h3>
+  {% for r in wellness %}
+    <div class="card-custom wellness-card">
+      <h5>{{ r.title }}</h5>
+      <p>{{ r.content }}</p>
+      <span class="date-badge">{{ r.created_at|date:"M d, Y" }}</span>
+    </div>
+  {% empty %}
+    <p class="text-muted">No wellness resources available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

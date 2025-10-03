@@ -1,0 +1,132 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .page-title {
+        text-align: center;
+        margin: 30px 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 25px auto;
+    }
+
+    .card-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    thead th {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    color: #fff;
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+thead th:first-child {
+    border-top-left-radius: 10px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 10px;
+}
+
+
+    tbody tr {
+        background: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #eef6ff;
+        transform: scale(1.01);
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 2px solid #fff;
+    }
+
+    .dept-label {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .doctor-name {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .doctor-mobile {
+        color: #666;
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">
+        <i class="glyphicon glyphicon-briefcase"></i> Department & Doctors
+    </h2>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" class="form-control" id="searchInput" placeholder="🔍 Search by doctor or department...">
+    </div>
+
+    <div class="card-container">
+        <table id="doctorTable">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Doctor Name</th>
+                    <th>Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in doctors %}
+                <tr>
+                    <td class="dept-label">{{ d.department }}</td>
+                    <td class="doctor-name">{{ d.get_name }}</td>
+                    <td class="doctor-mobile">{{ d.mobile }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-muted text-center">No doctors available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Live Search Script -->
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#doctorTable tbody tr");
+        rows.forEach(row => {
+            let text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
+    });
+</script>
+
+{% endblock content %}

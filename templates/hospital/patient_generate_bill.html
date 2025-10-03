@@ -1,0 +1,197 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .invoice-box {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background: white;
+        border-radius: 8px;
+    }
+
+    .invoice-box h1 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #003973;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        border-collapse: collapse;
+    }
+
+    .invoice-box table td {
+        padding: 8px;
+        vertical-align: top;
+    }
+
+    .invoice-box table tr.top td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top td.title {
+        font-size: 36px;
+        color: #0072ff;
+    }
+
+    .invoice-box table tr.information td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #0072ff;
+        color: white;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td {
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .btn-submit {
+        display: inline-block;
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(45deg, #0072ff, #00c6ff);
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #0072ff;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+
+        .invoice-box table tr.information td {
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="invoice-box">
+    <h1 class="page-title"><i class="fas fa-file-invoice"></i> Discharge Invoice</h1>
+
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            Hospital Management
+                        </td>
+                        <td>
+                            Admit Date: <strong>{{admitDate}}</strong><br>
+                            Release Date: <strong>{{todayDate}}</strong><br>
+                            Days Spent: <strong>{{day}}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            Patient Name: <strong>{{name}}</strong><br>
+                            Mobile: <strong>{{mobile}}</strong><br>
+                            Address: <strong>{{address}}</strong>
+                        </td>
+
+                        <td>
+                            Doctor Name: <strong>{{assignedDoctorName}}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>Disease & Symptoms</td>
+            <td></td>
+        </tr>
+        <tr class="details">
+            <td colspan="2">{{symptoms}}</td>
+        </tr>
+
+        <tr class="heading">
+            <td>Item</td>
+            <td>Price (₹)</td>
+        </tr>
+
+        <form method="post">
+            {% csrf_token %}
+            <tr class="item">
+                <td>Room Charge (Per Day)</td>
+                <td><input type="number" name="roomCharge" placeholder="Enter amount"></td>
+            </tr>
+            <tr class="item">
+                <td>Doctor Fee</td>
+                <td><input type="number" name="doctorFee" placeholder="Enter amount"></td>
+            </tr>
+            <tr class="item">
+                <td>Medicine Cost</td>
+                <td><input type="number" name="medicineCost" placeholder="Enter amount"></td>
+            </tr>
+            <tr class="item last">
+                <td>Other Charges</td>
+                <td><input type="number" name="OtherCharge" placeholder="Enter amount"></td>
+            </tr>
+
+            <tr class="total">
+                <td></td>
+                <td><button type="submit" class="btn-submit">Generate Bill</button></td>
+            </tr>
+        </form>
+    </table>
+</div>
+
+{% endblock content %}

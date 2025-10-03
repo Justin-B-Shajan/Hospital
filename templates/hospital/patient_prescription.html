@@ -1,0 +1,145 @@
+{% extends 'hospital/patient_base.html' %}
+{% block content %}
+<br>
+
+<style>
+    .page-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 30px;
+        color: #ffffff;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 12px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #0072ff;
+        color: white;
+    }
+
+    thead th {
+        padding: 12px;
+        text-align: center;
+    }
+
+    tbody tr {
+        background: #fff;
+        transition: background 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #f1f8ff;
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+
+    .status-sent {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: #212529;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    .no-data {
+        text-align: center;
+        color: red;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 22px;
+        }
+        thead th, tbody td {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">📋 My Prescriptions</h2>
+
+    {% if prescriptions %}
+    <div class="card">
+        <div class="card-header">
+            Prescription Details ({{ prescriptions|length }})
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Medication</th>
+                            <th>Dosage</th>
+                            <th>Instructions</th>
+                            <th>Date Prescribed</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prescription in prescriptions %}
+                        <tr>
+                            <td>{{ prescription.doctor.get_name }}</td>
+                            <td>{{ prescription.medication }}</td>
+                            <td>{{ prescription.dosage }}</td>
+                            <td>{{ prescription.instructions }}</td>
+                            <td>{{ prescription.date_prescribed|date:"M d, Y" }}</td>
+                            <td>
+                                {% if prescription.is_sent %}
+                                    <span class="status-sent">Sent</span>
+                                {% else %}
+                                    <span class="status-pending">Pending</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-data">
+        <h4>No prescriptions found.</h4>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

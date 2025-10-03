@@ -1,0 +1,136 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<style>
+    body {
+        background: #0d64e8;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        margin: 30px 0;
+        color: #ffffff;
+    }
+
+    .table-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead {
+        background: linear-gradient(90deg, #4a90e2, #357ABD);
+    }
+
+    thead th {
+        color: white;
+        font-weight: bold;
+        padding: 12px;
+        text-align: center;
+    }
+
+    tbody tr {
+        background: #fff;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    tbody tr:hover {
+        background: #f1f8ff;
+        transform: translateY(-2px);
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-approve {
+        background: #28a745;
+        color: white;
+        border-radius: 5px;
+        padding: 6px 10px;
+        font-size: 14px;
+        border: none;
+    }
+
+    .btn-approve:hover {
+        background: #218838;
+    }
+
+    .btn-reject {
+        background: #dc3545;
+        color: white;
+        border-radius: 5px;
+        padding: 6px 10px;
+        font-size: 14px;
+        border: none;
+    }
+
+    .btn-reject:hover {
+        background: #c82333;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+        font-style: italic;
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">📋 Appointment Approvals Required</h2>
+
+    <div class="table-container">
+        {% if appointments %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Patient Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Approve</th>
+                    <th>Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in appointments %}
+                <tr>
+                    <td>{{ a.doctorName }}</td>
+                    <td>{{ a.patientName }}</td>
+                    <td>{{ a.description }}</td>
+                    <td>{{ a.appointment_date }}</td>
+                    <td>{{ a.appointment_time }}</td>
+                    <td>
+                        <a href="{% url 'approve-appointment' a.id %}" class="btn-approve">
+                            ✔ Approve
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'reject-appointment' a.id %}" class="btn-reject">
+                            ✘ Reject
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-data">
+            No appointments pending approval.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

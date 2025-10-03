@@ -1,0 +1,149 @@
+{% extends "hospital/admin_base.html" %}
+{% block content %}
+<style>
+  .page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #ffffff;
+  }
+
+  .btn-add {
+    background: #1abc9c;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+
+  .btn-add:hover {
+    background: #16a085;
+    color: white;
+  }
+
+  .resource-card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+
+  .resource-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  .badge-category {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .badge-tips {
+    background: #27ae60;
+  }
+
+  .badge-articles {
+    background: #2980b9;
+  }
+
+  .badge-wellness {
+    background: #f39c12;
+    color: white;
+  }
+
+  .resource-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .action-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .edit-btn {
+    background: #3498db;
+    color: white;
+  }
+
+  .delete-btn {
+    background: #e74c3c;
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background: #2980b9;
+  }
+
+  .delete-btn:hover {
+    background: #c0392b;
+  }
+
+  @media (min-width: 768px) {
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .card-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<div class="container mt-4">
+  <h2 class="page-title">📚 Manage Health Resources</h2>
+
+  <div class="text-right mb-4">
+    <a href="{% url 'create_health_resource' %}" class="btn-add">+ Add New Resource</a>
+  </div>
+
+  <div class="card-grid">
+    {% for resource in resources %}
+    <div class="resource-card">
+      <div class="resource-title">{{ resource.title }}</div>
+      <div style="margin: 10px 0;">
+        {% if resource.category == "tips" %}
+          <span class="badge-category badge-tips">Tips</span>
+        {% elif resource.category == "articles" %}
+          <span class="badge-category badge-articles">Articles</span>
+        {% elif resource.category == "wellness" %}
+          <span class="badge-category badge-wellness">Wellness</span>
+        {% else %}
+          <span class="badge-category badge-secondary">Unknown</span>
+        {% endif %}
+      </div>
+      <small class="text-muted">Created on: {{ resource.created_at|date:"M d, Y H:i" }}</small>
+
+      <div class="resource-footer">
+        <a href="{% url 'edit_health_resource' resource.id %}" class="action-btn edit-btn">Edit</a>
+        <a href="{% url 'delete_health_resource' resource.id %}" class="action-btn delete-btn">Delete</a>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No resources available.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

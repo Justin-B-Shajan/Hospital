@@ -1,0 +1,15 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center text-danger">Delete Resource</h2>
+  <div class="alert alert-warning">
+    Are you sure you want to delete <strong>{{ resource.title }}</strong> ({{ resource.get_category_display }})?
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'admin_health_resources' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

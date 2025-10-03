@@ -1,0 +1,104 @@
+{% extends 'hospital/homebase.html' %}
+
+{% block content %}
+<head>
+  <style>
+    /* Page Background */
+    .doctor-hero {
+  background: linear-gradient(rgba(0, 119, 182, 0.85), rgba(2, 62, 138, 0.85)),
+    url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center/cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+/* Card */
+.doctor-card {
+  background: #ffffff;
+  color: #333;
+  padding: 50px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.doctor-card h1 {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #023e8a; /* Dark blue heading */
+}
+
+.doctor-card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Buttons */
+.doctor-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.doctor-btn.signup {
+  background: #0077b6; /* Medium blue */
+  color: #fff;
+}
+
+.doctor-btn.signup:hover {
+  background: #023e8a; /* Darker blue */
+  transform: scale(1.05);
+}
+
+.doctor-btn.login {
+  background: #90e0ef; /* Light blue */
+  color: #023e8a;
+}
+
+.doctor-btn.login:hover {
+  background: #48cae4; /* Slightly darker light blue */
+  transform: scale(1.05);
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  </style>
+</head>
+
+<!-- Modern Hero Section -->
+<section class="doctor-hero">
+  <div class="doctor-card">
+    <h1>Hello, Doctor 👋</h1>
+    <p class="lead">Welcome to the <strong>Hospital Management System</strong></p>
+    <hr>
+    <p>You can access various features after Login or SignUp.</p>
+    <div>
+      <!-- <a href="/doctorsignup" class="doctor-btn signup"><i class="fa fa-user-plus"></i> Sign Up</a> -->
+      <a href="/doctorlogin" class="doctor-btn login"><i class="fa fa-sign-in"></i> Login</a>
+    </div>
+  </div>
+</section>
+{% endblock content %}

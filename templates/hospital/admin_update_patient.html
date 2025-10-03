@@ -1,0 +1,123 @@
+{% extends 'hospital/admin_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style>
+    .update-container {
+      max-width: 900px;
+      margin: 30px auto;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #0072ff, #8811c5);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .card-body {
+      padding: 30px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 0.95rem;
+    }
+
+    .btnSubmit {
+      background: linear-gradient(135deg, #0072ff, #8811c5);
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 12px 25px;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btnSubmit:hover {
+      background: linear-gradient(135deg, #0056b3, #6a0dad);
+    }
+  </style>
+</head>
+
+<div class="update-container">
+  <div class="card">
+    <div class="card-header">
+      Update Patient Details
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <!-- Left Column -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>First Name</label>
+              {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+            </div>
+            <div class="form-group">
+              <label>Username</label>
+              {% render_field userForm.username class="form-control" placeholder="Username" %}
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              {% render_field patientForm.address class="form-control" placeholder="Address" %}
+            </div>
+            <div class="form-group">
+              <label>Symptoms</label>
+              {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
+            </div>
+            <div class="form-group">
+              <label>Profile Picture</label>
+              {% render_field patientForm.profile_pic class="form-control" %}
+            </div>
+            <div class="form-group">
+              <label>Admit Date</label>
+              {% render_field patientForm.admitDate class="form-control" %}
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Last Name</label>
+              {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+            </div>
+           
+            <div class="form-group">
+              <label>Mobile</label>
+              {% render_field patientForm.mobile class="form-control" placeholder="Mobile" %}
+            </div>
+            <div class="form-group">
+              <label>Assigned Doctor</label>
+              {% render_field patientForm.assignedDoctorId class="form-control" %}
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btnSubmit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,114 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .page-header {
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    h2{
+      color: white;
+    }
+    
+
+    .doctor-list {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .doctor-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .doctor-item:last-child {
+        border-bottom: none;
+    }
+
+    .doctor-item:hover {
+        background: #f9f9f9;
+    }
+
+    .doctor-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .doctor-info img {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+    }
+
+    .doctor-text h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .doctor-text p {
+        margin: 2px 0;
+        font-size: 13px;
+        color: #000000;
+    }
+
+    .doctor-actions a {
+        margin-left: 8px;
+        font-size: 14px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: 0.2s ease;
+    }
+
+    .doctor-actions a:hover {
+        opacity: 0.85;
+    }
+</style>
+
+<div class="container">
+    <div class="page-header">
+        <h2><i class="glyphicon glyphicon-user"></i> Doctors Management</h2>
+        <p class="text-white">View, update, or remove doctors</p>
+    </div>
+
+    <div class="doctor-list">
+        {% for d in doctors %}
+        <div class="doctor-item">
+                <div class="doctor-info">
+                    {% if d.profile_pic %}
+                        <img src="{% static d.profile_pic.url %}" alt="Doctor {{ d.get_name }}">
+                    {% else %}
+                        <img src="{% static 'images/doctor.png' %}" alt="Doctor {{ d.get_name }}">
+                    {% endif %}
+                    <div class="doctor-text">
+                        <h5>{{ d.get_name }}</h5>
+                        <p><strong>Dept:</strong> {{ d.department }}</p>
+                        <p><strong>Mobile:</strong> {{ d.mobile }}</p>
+                    </div>
+                </div>
+            <div class="doctor-actions">
+                <a class="btn btn-sm btn-primary" href="{% url 'update-doctor' d.id %}">
+                    <i class="glyphicon glyphicon-edit"></i> Edit
+                </a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete-doctor-from-hospital' d.id %}">
+                    <i class="glyphicon glyphicon-trash"></i> Delete
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted p-4">No doctors available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

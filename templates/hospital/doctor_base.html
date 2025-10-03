@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doctor Dashboard</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #003973 0%, #0072ff 50%, #00c6ff 100%);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar-custom {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: #ffdd57 !important;
+    }
+
+    /* Sidebar Menu */
+    .menu {
+      width: 220px !important;
+      background: rgba(0, 0, 0, 0.7) !important;
+      height: 100vh !important;
+      position: fixed !important;
+      top: 56px !important; /* navbar height */
+      left: 0 !important;
+      overflow-y: auto !important;
+      padding-top: 20px !important;
+    }
+
+    .menu a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 12px 20px !important;
+      color: white !important;
+      text-decoration: none !important;
+      font-size: 1rem !important;
+      font-weight: 500 !important;
+      white-space: nowrap !important;
+    }
+
+    .menu a i {
+      margin-right: 12px !important;
+      font-size: 1.1rem !important;
+    }
+
+    .menu a.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Avatar section */
+    .avatar {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .avatar img {
+      width: 80px;
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+
+    .avatar h6 {
+      color: white;
+      margin: 5px 0;
+    }
+
+    /* Main content */
+    main {
+      margin-left: 220px;
+      padding: 20px;
+      flex: 1;
+    }
+
+    /* Footer */
+    footer {
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      font-size: 20px;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    footer a:hover {
+      color: #ffdd57;
+      transform: scale(1.1);
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .menu {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <a class="navbar-brand" href="/doctor-dashboard">Hospital Doctor Panel</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <form id="logout-form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link nav-link">Logout <i class="fas fa-sign-out-alt"></i></button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <br><br>
+
+  <!-- Sidebar -->
+  <nav class="menu">
+    <div class="avatar">
+      <img src="{% static doctor.profile_pic.url %}" alt="Doctor">
+      <h6>{{ request.user.first_name }}</h6>
+    </div>
+    <a href="/doctor-dashboard" class="{% if request.path == '/doctor-dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="{% url 'doctor-profile' %}" class="{% if request.path == '/doctor-profile/' %}active{% endif %}"><i class="fas fa-user-circle"></i> Profile</a>
+    <a href="/doctor-patient" class="{% if request.path == '/doctor-patient' %}active{% endif %}"><i class="fas fa-user-injured"></i> Patients</a>
+    <a href="/doctor-appointment" class="{% if request.path == '/doctor-appointment' %}active{% endif %}"><i class="fas fa-calendar-check"></i> Appointments</a>
+    <a href="{% url 'doctor-prescription' %}" class="{% if request.path == '/doctor-prescription/' %}active{% endif %}"><i class="fas fa-prescription"></i> Prescriptions</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+       <a href="" target="_blank" class="fab fa-facebook"></a>
+      <a href="" target="_blank" class="fab fa-whatsapp"></a>
+      <a href="" target="_blank" class="fab fa-instagram"></a>
+      <a href="" target="_blank" class="fab fa-twitter"></a>
+    </div>
+    <p>Made in Kerala © 2025 Justin B Shajan</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

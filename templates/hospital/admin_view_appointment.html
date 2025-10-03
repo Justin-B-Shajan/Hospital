@@ -1,0 +1,112 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<style>
+    body {
+        background: #0d64e8;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 30px 0;
+        color: #ffffff;
+    }
+
+    .card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+    }
+
+    .appointment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #eaeaea;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .appointment-header h4 {
+        font-size: 20px;
+        color: #4a90e2;
+    }
+
+    .appointment-header span {
+        font-size: 14px;
+        color: #999;
+    }
+
+    .appointment-body {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .appointment-item {
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .appointment-item h5 {
+        font-size: 16px;
+        margin: 5px 0;
+        color: #333;
+    }
+
+    .appointment-item p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .no-appointments {
+        text-align: center;
+        padding: 30px;
+        color: #888;
+        font-style: italic;
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">📅 Appointments</h2>
+
+    {% if appointments %}
+        {% for a in appointments %}
+        <div class="card">
+            <div class="appointment-header">
+                <h4>{{ a.doctorName }} &mdash; {{ a.patientName }}</h4>
+                <span>{{ a.appointmentDate }}</span>
+            </div>
+            <div class="appointment-body">
+                <div class="appointment-item">
+                    <h5>Description</h5>
+                    <p>{{ a.description }}</p>
+                </div>
+                <div class="appointment-item">
+                    <h5>Doctor</h5>
+                    <p>{{ a.doctorName }}</p>
+                </div>
+                <div class="appointment-item">
+                    <h5>Patient</h5>
+                    <p>{{ a.patientName }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-appointments">
+            No appointments available.
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

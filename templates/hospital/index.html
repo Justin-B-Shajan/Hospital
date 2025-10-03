@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>E-Hospital</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% include "hospital/loggedin_navbar.html" %}
+{% else %}
+    {% include "hospital/navbar.html" %}
+{% endif %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+  <style>
+    /* Hero Section */
+    .hero {
+      margin: 0;
+      padding: 120px 20px;
+      background: linear-gradient(rgba(0, 40, 70, 0.7), rgba(0, 40, 70, 0.7)),
+        url('{% static "images/bg.jpg" %}') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #e0e0e0;
+    }
+
+    .hero .btn-primary {
+      background-color: #00b4d8;
+      border: none;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .hero .btn-primary:hover {
+      background-color: #0096c7;
+      transform: scale(1.05);
+    }
+
+    /* Emergency Section */
+    .emergency {
+      text-align: center;
+      padding: 60px 20px;
+      background: #f8f9fa;
+    }
+
+    .emergency h2 {
+      font-size: 32px;
+      color: #0d1b2a;
+      margin-bottom: 15px;
+    }
+
+    .emergency p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .emergency .btn-danger {
+      background-color: #e63946;
+      border: none;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .emergency .btn-danger:hover {
+      background-color: #d62828;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>You’ll Love the Way We Care for You</h1>
+  <p>World-class healthcare with compassion, commitment, and excellence.</p>
+  <a class="btn btn-primary btn-lg" href="/patientclick" role="button">Book an Appointment</a>
+</section>
+
+<!-- Emergency CTA -->
+<section class="emergency">
+  <h2>Emergency?</h2>
+  <p>We’re available 24/7. Your health is our priority.</p>
+  <a class="btn btn-danger btn-lg" href="/patientclick" role="button">Get Immediate Help</a>
+</section>
+
+<!-- Cards Section -->
+<div class="container my-5">
+  {% include "hospital/admin_doctor_patient_card.html" %}
+</div>
+
+{% endblock content %}
+{% include "hospital/footer.html" %}
+</body>
+</html>

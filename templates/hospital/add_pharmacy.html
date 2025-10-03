@@ -1,0 +1,26 @@
+{% extends 'hospital/doctor_base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Add Pharmacy</h2>
+    <div class="card mx-auto" style="max-width:600px;">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {% render_field field class="form-control" %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Add Pharmacy</button>
+                <a href="{% url 'doctor-prescription' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

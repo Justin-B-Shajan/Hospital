@@ -1,0 +1,144 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .page-title {
+        text-align: center;
+        margin: 30px 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .card-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    thead th {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: #fff;
+        padding: 14px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    thead th:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    thead th:last-child {
+        border-top-right-radius: 10px;
+    }
+
+    tbody tr {
+        background: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #e8f9f0;
+        transform: scale(1.01);
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 2px solid #fff;
+        vertical-align: middle;
+    }
+
+    .patient-name {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .symptoms {
+        color: #555;
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+    .btn-approve {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .btn-approve:hover {
+        background: #1e7e34;
+    }
+
+    .btn-reject {
+        background: #dc3545;
+        color: #fff;
+    }
+
+    .btn-reject:hover {
+        background: #a71d2a;
+    }
+
+    .profile-pic {
+        border-radius: 50%;
+        border: 2px solid #28a745;
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title">
+        <i class="glyphicon glyphicon-user"></i> Patients Waiting for Admission
+    </h2>
+
+    <div class="card-container">
+        <table id="patientTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Profile Picture</th>
+                    <th>Symptoms</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Approve</th>
+                    <th>Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in patients %}
+                <tr>
+                    <td class="patient-name">{{ p.get_name }}</td>
+                    <td><img src="{% static p.profile_pic.url %}" class="profile-pic" alt="Profile Pic" height="40" width="40"></td>
+                    <td class="symptoms">{{ p.symptoms }}</td>
+                    <td>{{ p.mobile }}</td>
+                    <td>{{ p.address }}</td>
+                    <td><a class="btn btn-action btn-approve" href="{% url 'approve-patient' p.id %}"><i class="glyphicon glyphicon-ok"></i> Approve</a></td>
+                    <td><a class="btn btn-action btn-reject" href="{% url 'reject-patient' p.id %}"><i class="glyphicon glyphicon-remove"></i> Reject</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-muted text-center">No pending admission requests.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

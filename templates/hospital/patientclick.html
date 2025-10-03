@@ -1,0 +1,106 @@
+{% extends 'hospital/homebase.html' %}
+<!--
+developed By : sumit kumar
+facebook : fb.com/sumit.luv
+youtube : youtube.com/lazycoders
+
+{% block content %}
+<head>
+  <style>
+    /* Page Background */
+    .patient-hero {
+      background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 50%, #ff6a00 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      color: white;
+      text-align: center;
+    }
+
+    /* Card */
+    .patient-card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .patient-card h1 {
+      font-size: 38px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #ff6a00;
+    }
+
+    .patient-card p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    /* Buttons */
+    .patient-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .patient-btn.signup {
+      background: #ff6a00;
+      color: white;
+    }
+
+    .patient-btn.signup:hover {
+      background: #ff8c42;
+      transform: scale(1.05);
+    }
+
+    .patient-btn.login {
+      background: #feb47b;
+      color: white;
+    }
+
+    .patient-btn.login:hover {
+      background: #ffc87c;
+      transform: scale(1.05);
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<!-- Modern Hero Section -->
+<section class="patient-hero">
+  <div class="patient-card">
+    <h1>Hello, Patient 👋</h1>
+    <p class="lead">Welcome to the <strong>Hospital Management System</strong></p>
+    <hr>
+    <p>You can access various features after Login or SignUp.</p>
+    <div>
+      <a href="/patientsignup" class="patient-btn signup"><i class="fa fa-user-plus"></i> Register Your Account</a>
+      <a href="/patientlogin" class="patient-btn login"><i class="fa fa-sign-in"></i> Login</a>
+    </div>
+  </div>
+</section>
+{% endblock content %}

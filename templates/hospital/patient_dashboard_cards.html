@@ -1,0 +1,114 @@
+
+{% load static %}
+<style>
+    body {
+        background: #0e64e5;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background: #0072ff;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card h5 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card p {
+        color: #555;
+    }
+
+    .profile-card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0072ff;
+        margin-bottom: 10px;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+        color: #0072ff;
+        margin-bottom: 10px;
+    }
+
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card {
+        flex: 1 1 300px;
+    }
+
+    @media (max-width: 768px) {
+        .cards-container {
+            flex-direction: column;
+        }
+    }
+</style>
+<br>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Patient Dashboard</h2>
+
+    <div class="cards-container">
+        <!-- Patient Profile Card -->
+        <div class="card profile-card">
+            <div class="card-header">My Profile</div>
+            <div class="card-body text-center">
+                <img src="{% static 'images/adminpropic.png' %}" alt="Profile Picture">
+                <h5>{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+                <p><strong>Mobile:</strong> {{ patient.mobile }}</p>
+                <p><strong>Address:</strong> {{ patient.address }}</p>
+            </div>
+        </div>
+
+        <!-- Doctor Info Card -->
+        <!-- <div class="card">
+            <div class="card-header">Assigned Doctor</div>
+            <div class="card-body">
+                <h5>{{ doctorName }}</h5>
+                <p><strong>Mobile:</strong> {{ doctorMobile }}</p>
+                <p><strong>Department:</strong> {{ doctorDepartment }}</p>
+                <p><strong>Address:</strong> {{ doctorAddress }}</p>
+                <p><strong>Admit Date:</strong> {{ admitDate }}</p>
+            </div>
+        </div> -->
+
+        <!-- Insurance Info Card -->
+        <div class="card">
+            <div class="card-header">Insurance Details</div>
+            <div class="card-body">
+                {% if insurance %}
+                    <p><strong>Provider:</strong> {{ insurance.provider }}</p>
+                    <p><strong>Policy Number:</strong> {{ insurance.policy_number }}</p>
+                    <p><strong>Coverage Type:</strong> {{ insurance.coverage_type }}</p>
+                    <p><strong>Expiry Date:</strong> {{ insurance.expiry_date|date:"M d, Y" }}</p>
+                    <a href="{% url 'update-insurance' %}" class="btn btn-primary btn-sm mt-2">Update Insurance</a>
+                {% else %}
+                    <p>No insurance details found.</p>
+                    <a href="{% url 'add-insurance' %}" class="btn btn-primary btn-sm mt-2">Add Insurance</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

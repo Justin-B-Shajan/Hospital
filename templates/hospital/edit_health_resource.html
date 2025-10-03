@@ -1,0 +1,15 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center text-primary">Edit Resource: {{ resource.title }}</h2>
+
+  <div class="card shadow-sm p-4">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Update</button>
+      <a href="{% url 'admin_health_resources' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

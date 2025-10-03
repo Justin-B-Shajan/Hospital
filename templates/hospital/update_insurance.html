@@ -1,0 +1,81 @@
+{% extends 'hospital/patient_base.html' %}
+{% block content %}
+
+<style>
+    .update-insurance-container {
+        margin-top: 50px;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #003973;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 15px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .btn-submit {
+        background: #0072ff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background: #005bb5;
+    }
+
+    form p {
+        margin-bottom: 15px;
+    }
+
+</style>
+
+<div class="container update-insurance-container">
+    <h2 class="page-title">Update Insurance</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Update Insurance Details
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

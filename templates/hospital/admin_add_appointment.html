@@ -1,0 +1,93 @@
+{% extends 'hospital/admin_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<style>
+    body {
+        background: #0d64e8;
+    }
+
+    .note {
+        text-align: center;
+        height: 70px;
+        background: linear-gradient(90deg, #0072ff, #8811c5);
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 70px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .form-content {
+        padding: 30px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .btnSubmit {
+        border: none;
+        border-radius: 50px;
+        padding: 12px 25px;
+        font-size: 16px;
+        cursor: pointer;
+        background: linear-gradient(90deg, #0072ff, #8811c5);
+        color: white;
+        transition: background 0.3s ease;
+    }
+
+    .btnSubmit:hover {
+        background: linear-gradient(90deg, #0056b3, #6610f2);
+    }
+
+    .form-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .register-form {
+        max-width: 600px;
+        margin: auto;
+    }
+</style>
+
+<div class="container register-form">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form">
+            <div class="note">📅 Book Appointment</div>
+
+            <div class="form-content">
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    {% render_field appointmentForm.description class="form-control" placeholder="Enter appointment description" %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Doctor</label>
+                    {% render_field appointmentForm.doctorId class="form-control" %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Patient</label>
+                    {% render_field appointmentForm.patientId class="form-control" %}
+                </div><br>
+
+                <div class="text-center">
+                    <button type="submit" class="btnSubmit">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

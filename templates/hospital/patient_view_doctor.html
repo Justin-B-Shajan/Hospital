@@ -1,0 +1,171 @@
+{% extends 'hospital/patient_base.html' %}
+{% block content %}
+{% load static %}
+<br>
+<style>
+    .page-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 30px;
+        color: #ffffff;
+    }
+
+    .search-form {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .search-form input {
+        border-radius: 5px;
+        padding: 5px 10px;
+        border: 1px solid #ffffff;
+    }
+
+    .search-form button {
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: none;
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 12px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+    .btn-outline-primary {
+    background: white;
+    color: #0e64e5;
+    border: 2px solid #0e64e5;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #0e64e5;
+    color: white;
+    border-color: #0e64e5;
+}
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #0072ff;
+        color: white;
+    }
+
+    thead th {
+        padding: 12px;
+        text-align: center;
+    }
+
+    tbody tr {
+        background: #fff;
+        transition: background 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #f1f8ff;
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+
+    .profile-pic {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border: 2px solid #0072ff;
+    }
+
+    .no-doctor {
+        text-align: center;
+        margin-top: 50px;
+        color: red;
+        font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 22px;
+        }
+        thead th, tbody td {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container">
+
+    <h2 class="page-title">👨‍⚕️ Doctor Directory</h2>
+
+    <form action="/searchdoctor" method="get" class="search-form">
+        <input type="search" name="query" placeholder="Search doctor..." value="{{ request.GET.query }}">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+
+    {% if doctors %}
+    <div class="card">
+        <div class="card-header">
+            Total Doctors ({{ doctors|length }})
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Profile Picture</th>
+                            <th>Mobile</th>
+                            <th>Address</th>
+                            <th>Department</th>
+                            <th>Book Appointment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in doctors %}
+                        <tr>
+                            <td>{{ d.get_name }}</td>
+                            <td><img src="{% static d.profile_pic.url %}" alt="Profile Pic" class="profile-pic"></td>
+                            <td>{{ d.mobile }}</td>
+                            <td>{{ d.address }}</td>
+                            <td>{{ d.department }}</td>
+                            <td><a href="{% url 'patient-book-appointment' %}?doctorId={{d.user_id}}"><button class="btn btn-outline-primary">Book Appointment</button></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-doctor">
+        <h4>No doctors found!</h4>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock content %}

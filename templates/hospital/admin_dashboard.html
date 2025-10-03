@@ -1,0 +1,102 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'hospital/admin_dashboard_cards.html' %}
+
+<div class="container mt-5">
+  <div class="row g-4">
+
+    <!-- Recent Doctors Card -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header text-center bg-primary text-white">
+          <h6 class="mb-0">Recent Doctors</h6>
+        </div><br>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for d in doctors %}
+                <tr>
+                  <td>{{ d.get_name }}</td>
+                  <td>{{ d.department }}</td>
+                  <td>{{ d.mobile }}</td>
+                  {% if d.status %}
+                  <td><span class="badge bg-success">Permanent</span></td>
+                  {% else %}
+                  <td><span class="badge bg-warning text-dark">On Hold</span></td>
+                  {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4" class="text-center">No Doctors Found</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <a href="/admin-doctor" class="btn btn-sm btn-primary">View All Doctors</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Patients Card -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header text-center bg-success text-white">
+          <h6 class="mb-0">Recent Patients</h6>
+        </div><br>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Symptoms</th>
+                  <th>Mobile</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in patients %}
+                <tr>
+                  <td>{{ p.get_name }}</td>
+                  <td>{{ p.symptoms }}</td>
+                  <td>{{ p.mobile }}</td>
+                  <td>{{ p.address }}</td>
+                  {% if p.status %}
+                  <td><span class="badge bg-success">Admitted</span></td>
+                  {% else %}
+                  <td><span class="badge bg-secondary">On Hold</span></td>
+                  {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center">No Patients Found</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <a href="/admin-patient" class="btn btn-sm btn-primary">View All Patients</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><br><br>
+{% endblock content %}

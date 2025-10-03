@@ -1,0 +1,109 @@
+{% extends 'hospital/homebase.html' %}
+
+{% block content %}
+<head>
+  <style>
+    /* Page Background */
+    .admin-hero {
+  background: 
+    linear-gradient(
+      rgba(74, 0, 224, 0.6),   /* Purple start with transparency */
+      rgba(142, 45, 226, 0.6),  /* Middle color */
+      rgba(166, 74, 201, 0.6)   /* End color */
+    ),
+    url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center/cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  color: white;
+  text-align: center;
+}
+
+
+    /* Card */
+    .admin-card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .admin-card h1 {
+      font-size: 38px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #4A00E0;
+    }
+
+    .admin-card p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    /* Buttons */
+    .admin-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .admin-btn.signup {
+      background: #8E2DE2;
+      color: #fff;
+    }
+
+    .admin-btn.signup:hover {
+      background: #A64AC9;
+      transform: scale(1.05);
+    }
+
+    .admin-btn.login {
+      background: #B57EDC;
+      color: #fff;
+    }
+
+    .admin-btn.login:hover {
+      background: #9A4CD1;
+      transform: scale(1.05);
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<!-- Modern Hero Section -->
+<section class="admin-hero">
+  <div class="admin-card">
+    <h1>Hello, Admin 👋</h1>
+    <p class="lead">Welcome to the <strong>Hospital Management System</strong></p>
+    <hr>
+    <p>You can access various features after Login or SignUp.</p>
+    <div>
+      <a href="/adminsignup" class="admin-btn signup"><i class="fa fa-user-plus"></i> Sign Up</a>
+      <a href="/adminlogin" class="admin-btn login"><i class="fa fa-sign-in"></i> Login</a>
+    </div>
+  </div>
+</section>
+{% endblock content %}

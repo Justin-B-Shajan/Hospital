@@ -1,0 +1,224 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #0c60de;
+    }
+
+    .invoice-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .invoice-header {
+        border-bottom: 2px solid #0072ff;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+
+    .invoice-header h1 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #0072ff;
+    }
+
+    .invoice-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .invoice-info div {
+        flex: 1 1 45%;
+        margin-bottom: 15px;
+    }
+
+    .invoice-info h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .invoice-info p {
+        margin: 5px 0;
+        font-size: 15px;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .invoice-table th {
+        background: #0072ff;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .invoice-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-table tr:hover {
+        background: #f9f9f9;
+    }
+
+    .total-row td {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+
+    .status-paid {
+        background: #28a745;
+        color: white;
+    }
+
+    .status-pending {
+        background: #ffc107;
+        color: #333;
+    }
+
+    .invoice-actions {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .invoice-actions a,
+    .invoice-actions button {
+        padding: 12px 25px;
+        margin: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-download {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-pay {
+        background: #6772e5;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .invoice-info {
+            flex-direction: column;
+        }
+
+        .invoice-info div {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+
+<div class="invoice-container">
+    {% if is_discharged %}
+    <!-- Invoice Header -->
+    <div class="invoice-header">
+        <h1>Hospital Invoice</h1>
+        <p><strong>Admit Date:</strong> {{admitDate}} &nbsp; | &nbsp; <strong>Release Date:</strong> {{releaseDate}} &nbsp; | &nbsp; <strong>Days Spent:</strong> {{daySpent}}</p>
+    </div>
+
+    <!-- Patient & Doctor Info -->
+    <div class="invoice-info">
+        <div>
+            <h4>Patient Details</h4>
+            <p><strong>Name:</strong> {{patientName}}</p>
+            <p><strong>Mobile:</strong> {{mobile}}</p>
+            <p><strong>Address:</strong> {{address}}</p>
+        </div>
+        <div>
+            <h4>Doctor Details</h4>
+            <p><strong>Name:</strong> {{ assignedDoctorName|default:"Not Assigned" }}</p>
+        </div>
+    </div>
+
+    <!-- Symptoms -->
+    <div>
+        <h4>Disease & Symptoms</h4>
+        <p>{{symptoms}}</p>
+    </div>
+
+    <!-- Charges Table -->
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Room Charge ({{daySpent}} days)</td>
+                <td>{{roomCharge}}</td>
+            </tr>
+            <tr>
+                <td>Doctor Fee</td>
+                <td>{{doctorFee}}</td>
+            </tr>
+            <tr>
+                <td>Medicine Cost</td>
+                <td>{{medicineCost}}</td>
+            </tr>
+            <tr>
+                <td>Other Charge</td>
+                <td>{{OtherCharge}}</td>
+            </tr>
+            <tr class="total-row">
+                <td>Total</td>
+                <td>{{total}}</td>
+            </tr>
+            <tr class="total-row">
+                <td>Insurance Covered</td>
+                <td>{{ insurance_covered }}</td>
+            </tr>
+            <tr class="total-row">
+                <td>Final Amount Payable</td>
+                <td>{{ final_amount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Actions -->
+    <div class="invoice-actions">
+        <a class="btn-download" href="{% url 'download-pdf' patientId %}">📥 Download Invoice</a>
+        {% if payment_status %}
+            <button class="btn-pay" disabled>Paid</button>
+        {% else %}
+            <form action="{% url 'payment' patientId %}" method="GET" style="display:inline;">
+                <button type="submit" class="btn-pay">💳 Pay with Stripe</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% else %}
+    <div style="text-align:center; padding:50px;">
+        <h4 style="color:red;">You are not discharged yet!</h4>
+        <p>Your treatment is ongoing. Once discharged, you can download the invoice.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

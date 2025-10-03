@@ -1,0 +1,163 @@
+{% extends 'hospital/patient_base.html' %}
+{% block content %}
+<br>
+<style>
+    .appointments-container {
+        margin-top: 40px;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #ffffff;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #0072ff, #00c6ff);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 15px 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead {
+        background: #0072ff;
+        color: white;
+    }
+
+    thead th {
+        padding: 12px;
+        text-align: center;
+    }
+
+    tbody tr {
+        background: #fff;
+        transition: background 0.3s ease;
+    }
+
+    tbody tr:hover {
+        background: #f1f8ff;
+    }
+
+    tbody td {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+
+    .status-confirmed {
+        background-color: #28a745;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: black;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .status-cancelled {
+        background-color: #dc3545;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .status-prescription-sent {
+        background-color: #17a2b8;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 24px;
+        }
+        thead th, tbody td {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container appointments-container">
+    <h2 class="page-title">📅 Your Appointments</h2>
+
+    <div class="card">
+        <div class="card-header">
+            Appointment List
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.doctorName }}</td>
+                            <td>{{ appointment.description }}</td>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.appointment_time }}</td>
+                            <td>
+                                {% with prescription=appointment.prescription_set.all.first %}
+                                    {% if prescription and prescription.is_sent %}
+                                        <span class="status-prescription-sent">Prescription Sent</span>
+                                    {% elif appointment.cancelled %}
+                                        <span class="status-cancelled">Cancelled</span>
+                                    {% elif appointment.status %}
+                                        <span class="status-confirmed">Confirmed</span>
+                                    {% else %}
+                                        <span class="status-pending">Pending</span>
+                                    {% endif %}
+                                {% endwith %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No appointments found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
